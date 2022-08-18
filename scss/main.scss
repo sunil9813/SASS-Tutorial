@@ -1,0 +1,77 @@
+@import "./resets";
+@import "./varibale";
+
+@function weight($weight-name) {
+  @return map-get($font-weights, $weight-name);
+}
+// common flex
+// first
+/*@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}*/
+@mixin flexCenter($direction) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
+
+@mixin theme($light-theme: true) {
+  @if $light-theme {
+    background-color: lighten($primary-color, 100%);
+    color: darken($text-color, 100%);
+  }
+}
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
+body {
+  background-color: $secondar-color;
+  color: $text-color;
+  font-weight: weight(regular);
+}
+.main {
+  // first
+  //@include flexCenter;
+
+  // second
+  @include flexCenter(row);
+  //width: 80%  ;
+  // operation must a same type
+  // % => %
+  // px => px
+  width: 80% - 30%;
+  margin: 0 auto;
+
+  #{&}_para1 {
+    font-weight: map-get($font-weights, regular);
+    margin: 5px;
+    &:hover {
+      color: pink;
+      //  font-weight: weight(bold);
+    }
+  }
+
+  // para1 ko kunai value lai chai para2 ma trasfer garnu xa
+  #{&}_para2 {
+    @extend .main_para1;
+
+    &:hover {
+      color: $accent-color;
+      cursor: pointer;
+    }
+  }
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.light {
+  @include theme($light-theme: true);
+}
